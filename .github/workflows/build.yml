@@ -24,11 +24,14 @@ jobs:
  
       - name: Install Skaffold
         run: |
-          curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+          curl -fsSL -o skaffold \
+            https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
           sudo install skaffold /usr/local/bin/skaffold
+          skaffold version
  
-      - name: Build and push images
+      - name: Build and push all configured images
         run: |
           skaffold build \
-            --default-repo=docker.io/${{ secrets.DOCKERHUB_USERNAME }}/online-boutique \
+            --default-repo=docker.io/${{ secrets.DOCKERHUB_USERNAME }} \
             --push
+ 
